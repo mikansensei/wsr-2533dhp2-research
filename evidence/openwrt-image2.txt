@@ -1,0 +1,18 @@
+SPDX-License-Identifier: CC-BY-4.0
+Source date: 2026-08-17
+Sanitized excerpt: MAC, UUID, host path and unrelated console output omitted.
+
+Linux version 6.12.94
+OpenWrt GCC 14.3.0 r33051-f5dae5ece4
+Machine model: Buffalo WSR-2533DHP2
+Kernel command line: earlycon=uart8250,mmio32,0x11002000 console=ttyS0,115200n8 swiotlb=512 ubi.mtd=image2-ubi root=/dev/ubiblock0_0 rootfstype=squashfs rootwait
+VFS: Mounted root (squashfs filesystem) readonly on device 254:0.
+UBIFS: mounted UBI device 0, volume 1, name "rootfs_data"
+LEB size: 129024 bytes, min./max. I/O unit sizes: 2048 bytes/2048 bytes
+mount_root: switching to ubifs overlay
+
+Volume ID:   1
+Type:        dynamic
+Size:        349 LEBs (45029376 bytes)
+State:       OK
+Name:        rootfs_data

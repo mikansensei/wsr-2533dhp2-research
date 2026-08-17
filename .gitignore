@@ -1,0 +1,16 @@
+# Public research archive: large/private lab artifacts stay out of Git.
+*.bin
+*.itb
+*.img
+*.dec
+*.dump
+*.raw
+*.log
+*.pem
+*.key
+*.pcap
+*.pcapng
+.env
+private/
+artifacts/
+out/

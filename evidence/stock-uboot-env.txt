@@ -1,0 +1,15 @@
+SPDX-License-Identifier: CC-BY-4.0
+Source date: 2026-08-17
+Sanitized excerpt: network addresses, MAC and unrelated write commands removed.
+
+U-Boot 2014.04-rc1 (Apr 18 2018 - 19:44:31) 0.05
+arm-linux-gcc (Buildroot 2014.11) 4.9.2
+GNU ld (GNU Binutils) 2.24
+
+boot2=nand read 0x41000000 0x7a00000 0x600000; iminfo 0x41000000; bootm 0x41000000
+boot_rd_img=nand read ${loadaddr} 0x200000 2000;image_blks 2048;nand read ${loadaddr} 0x200000 ${img_align_size}
+bootmenu_2=3. Boot system code via Flash.=run boot2
+loadaddr=0x4007FF28
+
+Note: boot2 above is the persisted final value, not the factory default.
+The pre-change value invoked dual_image_check before boot_rd_img and bootm.

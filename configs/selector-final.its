@@ -1,0 +1,41 @@
+// SPDX-License-Identifier: GPL-2.0-or-later
+/dts-v1/;
+
+/ {
+	description = "WSR-2533DHP2 Hybrid Selector v3";
+	#address-cells = <1>;
+
+	images {
+		u-boot {
+			description = "AArch64 read-only OEM/OpenWrt boot selector";
+			data = /incbin/("u-boot.bin");
+			type = "kernel";
+			arch = "arm64";
+			os = "linux";
+			compression = "none";
+			load = <0x44000000>;
+			entry = <0x44000000>;
+			hash-1 { algo = "crc32"; };
+			hash-2 { algo = "sha1"; };
+		};
+
+		fdt-wsr {
+			description = "WSR-2533DHP2 selector device tree";
+			data = /incbin/("u-boot.dtb");
+			type = "flat_dt";
+			arch = "arm64";
+			compression = "none";
+			hash-1 { algo = "crc32"; };
+			hash-2 { algo = "sha1"; };
+		};
+	};
+
+	configurations {
+		default = "conf-wsr";
+		conf-wsr {
+			description = "WSR-2533DHP2 Hybrid Selector v3";
+			kernel = "u-boot";
+			fdt = "fdt-wsr";
+		};
+	};
+};

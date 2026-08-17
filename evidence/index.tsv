@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: CC-BY-4.0
+# id	date	class	artifact-or-state	public-excerpt	private-source-sha256	result
+stock-env	2026-08-17	captured	stock U-Boot Config after selector boot2 update	stock-uboot-env.txt	0155175eeb02401d36153a9095f0f41b4ce9908011a70c6839f524310ae1cbfc	version and final boot2 captured
+selector-oem	2026-08-17	captured	selector-v3 FIT 82b9f6f8...	selector-v3-oem.txt	aad0060d261d8c623ac0566ec717359942fee03b59b44d3eac3389eeaddf87aa	DHP2 probe and OEM root mount succeeded
+openwrt-image2	2026-08-17	captured	image2 FIT d755f019...	openwrt-image2.txt	8e0c53db7b42a8907ad7e6bf4732c1b49092a846a4b8d11823eb91332cb5e8a6	UBI root and overlay succeeded
+selector-flash	2026-08-17	captured	selector-v3 padded 4b0197a4...	selector-flash-verify.txt	2dcebb2a572ffd078183c83afafad1ccf328c30aabcc037c5461f926b3c40dec	write verify and non-target comparison succeeded
+three-position	2026-08-17	user-observed	final persistent layout	three-position-acceptance.txt	-	ROUTER/OEM AP/OpenWrt WB/console accepted
+bad-block-scan	2026-08-14	captured	all 1024 eraseblocks	nand-geometry-and-bad-blocks.txt	5f815839f2b6361c1d5682bbb161b6053322bcd2eef4508fc06b4f9f16c58c92	read error 0 and bad marker 0

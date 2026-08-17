@@ -1,0 +1,44 @@
+// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
+/*
+ * Reference fragment for the accepted Image2 DTB. Integrate these nodes into
+ * mt7622-buffalo-wsr-2533dhp2.dts; do not include it blindly over an existing
+ * partitions node without deleting/replacing the original firmware nodes.
+ */
+
+/ {
+	chosen {
+		bootargs = "earlycon=uart8250,mmio32,0x11002000 console=ttyS0,115200n8 swiotlb=512 ubi.mtd=image2-ubi root=/dev/ubiblock0_0 rootfstype=squashfs rootwait";
+	};
+};
+/* Replacement body for nand@0/partitions after the preserved 0x0-0x200000. */
+&nandc {
+	nand@0 {
+		partitions {
+			partition@200000 {
+				label = "image1-fit";
+				reg = <0x200000 0x600000>;
+				read-only;
+			};
+			partition@800000 {
+				label = "image1-ubi";
+				reg = <0x800000 0x3400000>;
+				read-only;
+			};
+			partition@3c00000 {
+				label = "image2-fit";
+				reg = <0x3c00000 0x600000>;
+				read-only;
+			};
+			partition@4200000 {
+				label = "image2-ubi";
+				reg = <0x4200000 0x3400000>;
+				compatible = "linux,ubi";
+			};
+			partition@7a00000 {
+				label = "selector";
+				reg = <0x7a00000 0x600000>;
+				read-only;
+			};
+		};
+	};
+};

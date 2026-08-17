@@ -1,0 +1,25 @@
+// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
+/*
+ * Non-combinable reference profiles. Each block describes the only writable
+ * range for one RAM Recovery build. They are documentation/source fragments,
+ * not one DTS that should be compiled as-is.
+ */
+/* IMAGE2_ONLY:
+ * writable: image2-fit <0x03c00000 0x00600000>
+ * writable: image2-ubi <0x04200000 0x03400000>
+ * read-only: every other partition, including Config and selector
+ */
+
+/* SELECTOR_ONLY:
+ * writable: selector <0x07a00000 0x00600000>
+ * read-only: every other partition, including Config and both images
+ */
+
+/* OEM_IMAGE1_FULL_RESTORE:
+ * writable: oem-image1-restore <0x00200000 0x03a00000>
+ * read-only: every other partition, especially Image2 and selector
+ */
+
+/* All profiles use:
+ * bootargs = "earlycon=uart8250,mmio32,0x11002000 console=ttyS0,115200n8 swiotlb=512 rdinit=/init";
+ */

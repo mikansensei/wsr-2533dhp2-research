@@ -1,0 +1,11 @@
+SPDX-License-Identifier: CC-BY-4.0
+Acceptance date: 2026-08-17
+Observation class: user-observed final physical-switch test
+
+ROUTER -> Image1 Buffalo OEM boot: accepted
+AP     -> Image2 OpenWrt boot: accepted
+WB     -> Hybrid Selector U-Boot console stop: accepted
+
+The ROUTER automatic boot was also captured independently. The final AP/WB
+position checks were reported by the physical operator and are identified as
+such rather than represented as agent-captured UART transcripts.

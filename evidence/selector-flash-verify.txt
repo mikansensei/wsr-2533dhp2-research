@@ -1,0 +1,22 @@
+SPDX-License-Identifier: CC-BY-4.0
+Source date: 2026-08-17
+Sanitized excerpt: private paths removed.
+
+MTD OK selector size=6291456 dt_read_only=0
+MTD OK Preloader size=524288 dt_read_only=1
+MTD OK ATF size=262144 dt_read_only=1
+MTD OK Bootloader size=524288 dt_read_only=1
+MTD OK Config size=524288 dt_read_only=1
+MTD OK factory size=262144 dt_read_only=1
+MTD OK image1-fit size=6291456 dt_read_only=1
+MTD OK image1-ubi size=54525952 dt_read_only=1
+MTD OK image2-fit size=6291456 dt_read_only=1
+MTD OK image2-ubi size=54525952 dt_read_only=1
+MTD OK glbcfg size=2097152 dt_read_only=1
+MTD OK board_data size=2097152 dt_read_only=1
+
+SELECTOR WRITE VERIFIED
+SELECTOR READBACK SHA256=4b0197a458749b772554929867c472d2f3eeb887438bd8a0246f38b87f28348f
+NON_TARGET_HASHES_UNCHANGED
+P4M_SELECTOR_ONLY_FLASH_COMPLETE
+No reboot, saveenv, dual_image_check, repair, or fallback was executed.

@@ -1,0 +1,14 @@
+# SPDX-License-Identifier: MIT
+name: public-tree
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check public archive
+        run: ./scripts/verify-public-tree.sh

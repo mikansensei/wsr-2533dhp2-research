@@ -1,0 +1,66 @@
+// SPDX-License-Identifier: GPL-2.0-or-later
+/* Host-only bring-up DTS for Buffalo WSR-2533DHP2. */
+/dts-v1/;
+
+#include "mt7622.dtsi"
+#include "mt7622-u-boot.dtsi"
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	model = "Buffalo WSR-2533DHP2";
+	compatible = "buffalo,wsr-2533dhp2", "mediatek,mt7622";
+
+	chosen {
+		stdout-path = &uart0;
+		tick-timer = &timer0;
+	};
+
+	aliases {
+		serial0 = &uart0;
+	};
+
+	memory@40000000 {
+		device_type = "memory";
+		reg = <0x40000000 0x0f000000>;
+	};
+};
+
+&pinctrl {
+	wsr_eth_pins: wsr-eth-pins {
+		mux {
+			function = "eth";
+			groups = "mdc_mdio", "rgmii_via_gmac2";
+		};
+	};
+
+	wsr_uart0_pins: wsr-uart0-pins {
+		mux {
+			function = "uart";
+			groups = "uart0_0_tx_rx";
+		};
+	};
+};
+
+&uart0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&wsr_uart0_pins>;
+	/* Keep serial bring-up independent of a pre-relocation clock probe. */
+	clock-frequency = <25000000>;
+	status = "okay";
+};
+
+/* Reuse switch/SGMII state inherited from the stock boot chain. */
+&eth {
+	pinctrl-names = "default";
+	pinctrl-0 = <&wsr_eth_pins>;
+	status = "okay";
+	mediatek,gmac-id = <0>;
+	phy-mode = "2500base-x";
+
+	fixed-link {
+		speed = <2500>;
+		full-duplex;
+	};
+};

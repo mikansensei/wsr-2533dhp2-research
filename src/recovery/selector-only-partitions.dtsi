@@ -1,0 +1,35 @@
+// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
+/* Replacement nand@0/partitions node: only Selector is writable. */
+partitions {
+	compatible = "fixed-partitions";
+	#address-cells = <1>;
+	#size-cells = <1>;
+	partition@0 { label = "Preloader"; reg = <0x0 0x80000>; read-only; };
+	partition@80000 { label = "ATF"; reg = <0x80000 0x40000>; read-only; };
+	partition@c0000 { label = "Bootloader"; reg = <0xc0000 0x80000>; read-only; };
+	partition@140000 { label = "Config"; reg = <0x140000 0x80000>; read-only; };
+	factory: partition@1c0000 {
+		label = "factory";
+		reg = <0x1c0000 0x40000>;
+		read-only;
+		nvmem-layout {
+			compatible = "fixed-layout";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			eeprom_factory_0: eeprom@0 { reg = <0x0 0x4da8>; };
+			macaddr_factory_4: macaddr@4 {
+				compatible = "mac-base";
+				reg = <0x4 0x6>;
+				#nvmem-cell-cells = <1>;
+			};
+			eeprom_factory_5000: eeprom@5000 { reg = <0x5000 0x4da8>; };
+		};
+	};
+	partition@200000 { label = "image1-fit"; reg = <0x200000 0x600000>; read-only; };
+	partition@800000 { label = "image1-ubi"; reg = <0x800000 0x3400000>; read-only; };
+	partition@3c00000 { label = "image2-fit"; reg = <0x3c00000 0x600000>; read-only; };
+	partition@4200000 { label = "image2-ubi"; reg = <0x4200000 0x3400000>; read-only; };
+	partition@7600000 { label = "glbcfg"; reg = <0x7600000 0x200000>; read-only; };
+	partition@7800000 { label = "board_data"; reg = <0x7800000 0x200000>; read-only; };
+	partition@7a00000 { label = "selector"; reg = <0x7a00000 0x600000>; };
+};

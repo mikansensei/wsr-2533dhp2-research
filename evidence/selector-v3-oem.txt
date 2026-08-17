@@ -1,0 +1,20 @@
+SPDX-License-Identifier: CC-BY-4.0
+Source date: 2026-08-17
+Sanitized excerpt: transfer addresses and unrelated console output omitted.
+
+U-Boot 2026.10-rc2-g527115ef6783-dirty
+CPU:   MediaTek MT7622
+Model: Buffalo WSR-2533DHP2
+DRAM:  256 MiB
+
+WSRSEL GPIO gpio1=0 gpio16=1
+WSRSEL dispatch expected=DHP2 flash_offset=0x200000 page=0x400 slot_size=0x3a00000
+WSRSEL probe ok format=DHP2 fit_offset=0x1c fit_totalsize=0x23b64c read_size=0x23b800
+WSRSEL bootm=bootm 0x40080000 (bootargs unchanged)
+Verifying Hash Integrity ... crc32+ sha1+ OK
+
+[excerpt]
+0x00000020001c-0x000000440000 : "kernel"
+0x000000440000-0x000003c00000 : "rootfs"
+mtd: device 7 (rootfs) set to be root filesystem
+VFS: Mounted root (squashfs filesystem) readonly on device 31:7.

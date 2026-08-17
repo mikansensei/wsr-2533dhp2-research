@@ -1,0 +1,34 @@
+SPDX-License-Identifier: CC-BY-4.0
+
+gpio = sample_gpio1_gpio16()
+if gpio == ROUTER:
+    dispatch_selected_image(0x00200000, EXPECT_DHP2)
+elif gpio == AP:
+    dispatch_selected_image(0x03c00000, EXPECT_RAW_FIT)
+elif gpio == WB:
+    stop_in_console("WB selected; no NAND read")
+else:
+    stop_in_console("unknown GPIO combination")
+
+dispatch_selected_image(byte_offset, expected):
+    assert byte_offset % nand_writesize == 0
+    page = byte_offset / nand_writesize
+    log(byte_offset, page)
+    read_header_to_stage(page, 0x41000000)
+
+    if expected == EXPECT_DHP2:
+        check_dhp2_magic_and_length(0x41000000)
+        fit_offset = 0x1c
+        fit_size = probe_fit_totalsize(0x41000000 + fit_offset)
+        assert fit_offset + fit_size <= dhp2_length
+    elif expected == EXPECT_RAW_FIT:
+        check_fit_magic(0x41000000)
+        fit_offset = 0
+        fit_size = probe_fit_totalsize(0x41000000)
+    else:
+        stop_in_console("unsupported expected format")
+
+    assert fit_size <= slot_size
+    copy_fit_to_aligned_ram(0x40080000, page, fit_offset, fit_size)
+    verify_fit(0x40080000)
+    bootm(0x40080000)  # Selector does not modify bootargs

@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: CC-BY-4.0
+# offset_hex	size_bytes	label	role
+0x00000000	524288	preloader	preserve
+0x00080000	262144	atf	preserve
+0x000c0000	524288	stock-uboot	preserve
+0x00140000	524288	config-env	boot2-modified-once-then-protected
+0x001c0000	262144	factory	preserve
+0x00200000	60817408	image1-oem	DHP2/TRX OEM slot
+0x03c00000	6291456	image2-fit	OpenWrt FIT
+0x04200000	54525952	image2-ubi	OpenWrt UBI
+0x07600000	2097152	glbcfg	preserve
+0x07800000	2097152	board-data	preserve
+0x07a00000	6291456	selector	Hybrid Selector

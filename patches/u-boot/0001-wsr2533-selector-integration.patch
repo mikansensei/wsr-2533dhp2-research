@@ -1,0 +1,110 @@
+From: WSR-2533DHP2 research project
+Subject: [PATCH] mediatek: integrate WSR-2533DHP2 read-only selector
+
+Base: 527115ef6783cec49e5610c523c124b399011361
+
+This patch wires the separately published DTS and mt7622_nand_ro.c into
+U-Boot and permits fixed-link Ethernet in the inherited chainload state.
+
+diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
+index a02dad22..4f38e8ff 100644
+--- a/arch/arm/dts/Makefile
++++ b/arch/arm/dts/Makefile
+@@ -1073,6 +1073,7 @@ mt8391-genio-720-evk-ufs-dtbs := mt8391-genio-720-evk.dtb mt8371-genio-common-uf
+ 
+ dtb-$(CONFIG_ARCH_MEDIATEK) += \
+ 	mt7622-rfb.dtb \
++	mt7622-buffalo-wsr-2533dhp2.dtb \
+ 	mt7623a-unielec-u7623-02-emmc.dtb \
+ 	mt7622-bananapi-bpi-r64.dtb \
+ 	mt7623n-bananapi-bpi-r2.dtb \
+diff --git a/drivers/mtd/nand/raw/Kconfig b/drivers/mtd/nand/raw/Kconfig
+index b5dfad73..22112234 100644
+--- a/drivers/mtd/nand/raw/Kconfig
++++ b/drivers/mtd/nand/raw/Kconfig
+@@ -651,5 +651,31 @@ config NAND_MT7621
+ 	  maximum 4KB page size.
+ 
++config NAND_MT7622
++	bool "Support for MediaTek MT7622 raw NAND read-only prototype"
++	depends on ARCH_MEDIATEK
++	select SYS_NAND_SELF_INIT
++	help
++	  Enable the MT7622 parallel raw NAND read-only prototype. It has no
++	  NAND program or erase operation.
++
++config CMD_MT7622_NAND_RO
++	bool "MT7622 raw NAND read-only diagnostic command"
++	depends on NAND_MT7622
++	help
++	  Add the dedicated nandro diagnostic command. It has no program,
++	  erase, or generic NAND command path.
++
++config CMD_WSR_SELECTOR
++	bool "WSR-2533DHP2 read-only boot selector"
++	depends on NAND_MT7622
++	depends on CMD_GPIO
++	select CMD_BOOTM
++	help
++	  Enable the fixed-slot physical-switch selector. It performs only
++	  NAND reads, validates DHP2 or raw FIT, and boots the selected image.
++	  It contains no write, repair, fallback, environment-save, or
++	  dual-image synchronization path.
++
+ comment "Generic NAND options"
+ 
+ config SYS_NAND_BLOCK_SIZE
+diff --git a/drivers/mtd/nand/raw/Makefile b/drivers/mtd/nand/raw/Makefile
+index 76546a62..3337895e 100644
+--- a/drivers/mtd/nand/raw/Makefile
++++ b/drivers/mtd/nand/raw/Makefile
+@@ -77,5 +77,6 @@ obj-$(CONFIG_NAND_STM32_FMC2) += stm32_fmc2_nand.o
+ obj-$(CONFIG_CORTINA_NAND) += cortina_nand.o
+ obj-$(CONFIG_ROCKCHIP_NAND) += rockchip_nfc.o
+ obj-$(CONFIG_NAND_MT7621) += mt7621_nand.o
++obj-$(CONFIG_NAND_MT7622) += mt7622_nand_ro.o
+ 
+ else  # minimal SPL drivers
+diff --git a/drivers/net/mtk_eth/mtk_eth.c b/drivers/net/mtk_eth/mtk_eth.c
+index a35754cc..af768d3e 100644
+--- a/drivers/net/mtk_eth/mtk_eth.c
++++ b/drivers/net/mtk_eth/mtk_eth.c
+@@ -1087,7 +1087,7 @@ static int mtk_eth_start(struct udevice *dev)
+ 		/* Enable communication with switch */
+ 		if (priv->swpriv->sw->mac_control)
+ 			priv->swpriv->sw->mac_control(priv->swpriv, true);
+-	} else {
++	} else if (!priv->force_mode) {
+ 		/* Start PHY */
+ 		ret = mtk_phy_start(priv);
+ 		if (ret)
+@@ -1260,12 +1260,14 @@ static int mtk_eth_probe(struct udevice *dev)
+ 	if (ret)
+ 		return ret;
+ 
+-	/* Probe phy if switch is not specified */
+-	if (!priv->swname)
++	/* A fixed-link MAC may inherit switch state from an earlier boot stage. */
++	if (!priv->swname && !priv->force_mode)
+ 		return mtk_phy_probe(dev);
+ 
+-	/* Initialize switch */
+-	return mtk_switch_init(priv);
++	if (priv->swname)
++		return mtk_switch_init(priv);
++
++	return 0;
+ }
+ 
+ static int mtk_eth_remove(struct udevice *dev)
+@@ -1452,7 +1455,7 @@ static int mtk_eth_of_to_plat(struct udevice *dev)
+ 			gpio_request_by_name(dev, "reset-gpios", 0,
+ 					     &priv->rst_gpio, GPIOD_IS_OUT);
+ 		}
+-	} else {
++	} else if (!priv->force_mode) {
+ 		ret = dev_read_phandle_with_args(dev, "phy-handle", NULL, 0,
+ 						 0, &args);
+ 		if (ret) {
+-- 
+2.43.0

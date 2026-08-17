@@ -1,0 +1,25 @@
+version = 1
+
+[[annotations]]
+path = ["README.md", "NOTICE.md", "LICENSE.md", "PROVENANCE.md", ".gitignore", "docs/**", "data/**", "evidence/**", "examples/**", "src/*/README.md"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 WSR-2533DHP2 research contributors"
+SPDX-License-Identifier = "CC-BY-4.0"
+
+[[annotations]]
+path = ["scripts/**", ".github/**"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 WSR-2533DHP2 research contributors"
+SPDX-License-Identifier = "MIT"
+
+[[annotations]]
+path = ["src/uboot/*.c", "src/uboot/*.dts", "src/uboot/*.env", "configs/**", "patches/u-boot/**"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 WSR-2533DHP2 research contributors"
+SPDX-License-Identifier = "GPL-2.0-or-later"
+
+[[annotations]]
+path = ["src/openwrt/*.dtsi", "src/recovery/*.dtsi"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 WSR-2533DHP2 research contributors"
+SPDX-License-Identifier = "GPL-2.0-or-later OR MIT"

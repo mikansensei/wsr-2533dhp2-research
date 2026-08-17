@@ -1,0 +1,8 @@
+Creative Commons Attribution 4.0 International
+
+The documentation, tables, and research descriptions in this repository are
+licensed under CC BY 4.0. The complete license text is available at:
+
+https://creativecommons.org/licenses/by/4.0/legalcode
+
+Attribution: mikansensei, “WSR-2533DHP2 research archive”, 2026.

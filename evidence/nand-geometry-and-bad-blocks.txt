@@ -1,0 +1,18 @@
+SPDX-License-Identifier: CC-BY-4.0
+Observation date: 2026-08-14
+
+Manufacturer ID: 0xef
+Chip ID: 0xa1
+Device: Winbond W29N01HZ
+Capacity: 128 MiB SLC
+Erase size: 128 KiB
+Page size: 2048
+OOB size: 64
+ECC: 4 bits per 512 bytes
+
+The read-only custom scan covered all 1024 eraseblocks and observed:
+read errors: 0
+bad markers: 0
+
+This observation applies only to the tested unit. Hybrid Selector v3 does
+not skip or remap bad blocks.
