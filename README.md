@@ -36,6 +36,7 @@ Selector は純正 Preloader、ATF、U-Boot を置き換えず、NAND 末尾の�
 - [最終結果と既知の制約](docs/09-results.md)
 - [版・artifact・実験証拠](docs/10-versions-and-evidence.md)
 - [OEM Image1復元経路](docs/11-oem-restore.md)
+- [NAND bad block handling の現状と制約](docs/12-nand-bad-block-semantics.md)
 - [ソースの来歴](PROVENANCE.md)
 
 数値表は [data/](data/) に、公開対象とした U-Boot 断片、統合 patch、設定、

@@ -29,3 +29,8 @@ write / erase / repair の実装を追加していません。
 readerはbad blockをskipしない。検証個体では全block scanがbad marker 0だったが、
 これは別個体での固定offset読出しを保証しない。また、driver・診断command・機器
 固有Selectorが一ファイルに同居する研究用PoCであり、upstream-ready driverではない。
+
+このreaderが扱うpage内のECC/FDMと、eraseblock単位のbad-block translationは別の
+層である。後者をv3が実装していないこと、BMTを仮定できないこと、non-zero bad block
+での運用停止条件は[bad block handlingの技術ノート](../../docs/12-nand-bad-block-semantics.md)
+を参照する。

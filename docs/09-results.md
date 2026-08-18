@@ -52,7 +52,9 @@ Image2 FIT と rootfs logical data の参照値は [Image2 の記録](04-openwrt
 - Selector の NAND reader は物理 page を連続して読み、bad block を skip / remap
   しない。検証個体では全 1024 eraseblock の scan で read error 0、bad marker 0
   だった。別個体では各 boot 対象範囲の bad block 状態を事前確認し、1個でも
-  存在する場合は現在の固定 offset 構成をそのまま使用しない。
+  存在する場合は現在の固定 offset 構成をそのまま使用しない。経路ごとの差異、
+  BMTの未確定事項、停止条件は [NAND bad block handling の現状と制約]
+  (12-nand-bad-block-semantics.md) にまとめた。
 - Ethernet は純正ブートチェーンから引き継いだ switch / SGMII 状態に依存し、
   custom U-Boot 単独の cold initialization は未実装である。
 - FIT の crc32 / sha1 は破損検出であり、署名による真正性保証ではない。
